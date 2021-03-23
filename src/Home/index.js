@@ -83,7 +83,7 @@ function Home() {
           const horaNoturnaTotal =
             +horasEmMinutosIniciais + +horasEmMinutosFinais;
 
-          console.log(converterHora(horaNoturnaTotal));
+          setHoraNormal("12:00");
           setHoraNoturna(converterHora(horaNoturnaTotal));
         }
 
@@ -116,7 +116,7 @@ function Home() {
         }
 
         //Inicia em jornada diurna e acaba em jornada diurna
-        if (separarHoraInicial[0] > 7 && separarHoraFinal[0] >= 19) {
+        if (separarHoraInicial[0] >= 7 && separarHoraFinal[0] >= 19) {
           const quantasHorasNoturna = separarHoraFinal[0] - 19;
           const horasEmMinutos =
             quantasHorasNoturna * 60 + +separarHoraFinal[1];
@@ -124,8 +124,13 @@ function Home() {
           if (quantasHorasNoturna === 0) {
             setMinutosNoturno(converterHora(separarHoraFinal[1]));
           }
-
           setHoraNoturna(converterHora(horasEmMinutos));
+
+          setHoraNormal(
+            converterHora(
+              converterMinutos(horaTotal) - converterMinutos(horaNoturna)
+            )
+          );
         }
 
         setHoraTotal(
